@@ -50,6 +50,7 @@ export const [loadedMusic, setLoadedMusic] = adaptState(false);
 export const song = new Howl({
   src: [dontGiveUpOnMe],
   html5: true,
+  preload: true,
 });
 
 song.once("load", () => {
