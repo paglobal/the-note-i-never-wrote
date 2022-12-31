@@ -60,3 +60,5 @@ song.once("load", () => {
 song.on("end", () => {
   song.play();
 });
+
+song.load();
