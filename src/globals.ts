@@ -1,6 +1,6 @@
 import { adaptState } from "promethium-js";
 import note from "./note";
-import dontGiveUpOnMe from "./assets/music/Andy Grammer - Don't Give Up On Me (Lyrics).mp3";
+import dontGiveUpOnMe from "./assets/music/Andy Grammer - Don't Give Up On Me.mp3";
 import { Howl } from "howler";
 
 export const [isPlaying, setIsPlaying] = adaptState(false);
@@ -10,7 +10,6 @@ let currentNoteSegmentIndex = 0;
 let segmentWaitTime = 1500;
 let letterWaitTime = 70;
 let currentNoteSegment = note[currentNoteSegmentIndex];
-let animationDuration = 600;
 
 export const [displayText, setDisplayText] = adaptState("");
 
@@ -49,7 +48,6 @@ export const [loadedMusic, setLoadedMusic] = adaptState(false);
 
 export const song = new Howl({
   src: [dontGiveUpOnMe],
-  html5: true,
   preload: true,
 });
 
@@ -62,3 +60,32 @@ song.on("end", () => {
 });
 
 song.load();
+
+let started = false;
+
+export function playPause() {
+  if (!started) {
+    setIsPlaying(true);
+    setTimeout(() => {
+      type();
+    }, 1000);
+  } else {
+    setIsPlaying(!isPlaying());
+    if (isPlaying()) {
+      type();
+      song.play();
+    } else {
+      song.pause();
+    }
+  }
+  if (!started) {
+    song.play();
+    started = true;
+  }
+}
+
+document.body.onkeyup = function (e) {
+  if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
+    playPause();
+  }
+};

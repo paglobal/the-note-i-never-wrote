@@ -11,7 +11,7 @@ const App = () => {
     >
       ${loadedMusic()
         ? html` ${h(Card)} ${h(PlayButton)} `
-        : html`<div class="text-4xl font-medium text-center">
+        : html`<div class="text-4xl font-semibold text-center">
             Loading. Please wait...
           </div>`}
     </div>`;

@@ -1,7 +1,6 @@
-import { adaptState, html } from "promethium-js";
+import { html } from "promethium-js";
 import { shadow } from "./app.module.css";
-import { isPlaying, setIsPlaying, type } from "./globals";
-import { song } from "./globals";
+import { isPlaying, playPause } from "./globals";
 
 const Play = html`
   <svg
@@ -66,28 +65,12 @@ const Pause = html`<svg
 </svg>`;
 
 const PlayButton = () => {
-  const [started, setStarted] = adaptState(false);
-
   return () => html`
     <button
       class="bg-red-400 rounded-full w-[100px] h-[100px] my-10 ${shadow}
              flex justify-center items-center outline-none border-4 border-[#1D2021]
              "
-      @click=${() => {
-        if (!started()) {
-          setIsPlaying(true);
-          setTimeout(() => {
-            type();
-          }, 1000);
-        } else {
-          setIsPlaying(!isPlaying());
-          if (isPlaying()) type();
-        }
-        if (!started()) {
-          song.play();
-          setStarted(true);
-        }
-      }}
+      @click=${playPause}
     >
       ${!isPlaying() ? Play : Pause}
     </button>
