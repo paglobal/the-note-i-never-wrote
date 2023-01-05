@@ -5,7 +5,7 @@
   "description": "A note to a loved one",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --emptyOutDir",
+    "build": "vite build --emptyOutDir && cp _redirects dist/_redirects",
     "preview": "vite preview"
   },
   "devDependencies": {
