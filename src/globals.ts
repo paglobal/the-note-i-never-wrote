@@ -3,7 +3,7 @@ import note from "./note";
 import dontGiveUpOnMe from "./assets/music/Andy Grammer - Don't Give Up On Me.mp3";
 import { Howl } from "howler";
 
-export const [isPlaying, setIsPlaying] = adaptState(false);
+export const isPlaying = adaptState(false);
 
 let cursor = 0;
 let currentNoteSegmentIndex = 0;
@@ -11,10 +11,10 @@ let segmentWaitTime = 1500;
 let letterWaitTime = 70;
 let currentNoteSegment = note[currentNoteSegmentIndex];
 
-export const [displayText, setDisplayText] = adaptState("");
+export const displayText = adaptState("");
 
 export function type() {
-  if (isPlaying()) proceed();
+  if (isPlaying.value) proceed();
 
   function proceed() {
     if (cursor === currentNoteSegment.length) {
@@ -26,8 +26,8 @@ export function type() {
       }
       currentNoteSegment = note[currentNoteSegmentIndex];
       setTimeout(() => {
-        if (isPlaying()) {
-          setDisplayText("");
+        if (isPlaying.value) {
+          displayText.set("");
           type();
         } else {
           currentNoteSegmentIndex--;
@@ -37,14 +37,14 @@ export function type() {
       }, segmentWaitTime);
     } else {
       let letter = currentNoteSegment[cursor];
-      setDisplayText(displayText() + letter);
+      displayText.set(displayText.value + letter);
       cursor++;
       setTimeout(type, letterWaitTime);
     }
   }
 }
 
-export const [loadedMusic, setLoadedMusic] = adaptState(false);
+export const loadedMusic = adaptState(false);
 
 export const song = new Howl({
   src: [dontGiveUpOnMe],
@@ -52,7 +52,7 @@ export const song = new Howl({
 });
 
 song.once("load", () => {
-  setLoadedMusic(true);
+  loadedMusic.set(true);
 });
 
 song.on("end", () => {
@@ -65,13 +65,13 @@ let started = false;
 
 export function playPause() {
   if (!started) {
-    setIsPlaying(true);
+    isPlaying.set(true);
     setTimeout(() => {
       type();
     }, 1000);
   } else {
-    setIsPlaying(!isPlaying());
-    if (isPlaying()) {
+    isPlaying.set(!isPlaying.value);
+    if (isPlaying.value) {
       type();
       song.play();
     } else {

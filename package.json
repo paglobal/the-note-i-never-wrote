@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "howler": "^2.2.3",
-    "promethium-js": "^0.1.1"
+    "lit": "^3.3.2",
+    "promethium-js": "^0.18.0"
   }
 }

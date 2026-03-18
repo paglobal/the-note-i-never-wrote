@@ -1,4 +1,4 @@
-import { html } from "promethium-js";
+import { html } from "lit";
 import { shadow } from "./app.module.css";
 import { isPlaying, playPause } from "./globals";
 
@@ -65,16 +65,16 @@ const Pause = html`<svg
 </svg>`;
 
 const PlayButton = () => {
-  return () => html`
+  return () => (
     <button
-      class="bg-red-400 rounded-full w-[100px] h-[100px] my-10 ${shadow}
+      attr:class={`bg-red-400 rounded-full w-[100px] h-[100px] my-10 ${shadow}
              flex justify-center items-center outline-none border-4 border-[#1D2021]
-             "
-      @click=${playPause}
+            `}
+      on:click={playPause}
     >
-      ${!isPlaying() ? Play : Pause}
+      {isPlaying.value ? Play : Pause}
     </button>
-  `;
+  );
 };
 
 export default PlayButton;
